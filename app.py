@@ -1,5 +1,7 @@
 from flask import Flask, request, abort
-
+import os
+import sys
+from argparse import ArgumentParser
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -23,10 +25,12 @@ import time
 
 app = Flask(__name__)
 static_tmp_path = os.path.join(os.path.dirname(__file__), 'static', 'tmp')
+channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
+channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
 # Channel Access Token
-line_bot_api = LineBotApi('你的Channel AcessToken')
+line_bot_api = LineBotApi(channel_access_token)
 # Channel Secret
-handler = WebhookHandler('你的Channel Secret')
+handler = WebhookHandler(channel_secret)
 
 
 # 監聽所有來自 /callback 的 Post Request
